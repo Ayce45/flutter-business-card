@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:permission_handler/permission_handler.dart';
+import 'package:contacts_service/contacts_service.dart';
 
 import 'UrlLauncher.dart';
-import 'package:contacts_service/contacts_service.dart';
+import 'my_custom_icons.dart';
 
 void main() => runApp(EvanJuge());
 
@@ -14,15 +14,16 @@ const iOSLocalizedLabels = false;
 const tel = "07 77 31 12 38";
 const email = "contact@evanjuge.fr";
 const url = "evanjuge.fr";
+const url_linkedin = "fr.linkedin.com/in/evanjuge";
+const url_github = "github.com/Ayce45";
+const url_dribbble = "dribbble.com/Ayce45";
+const url_twitter = "twitter.com/aycefr";
 final UrlLauncher _urlLauncher = UrlLauncher();
 
 class EvanJuge extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-        home: HomePage(),
-        debugShowCheckedModeBanner: false
-    );
+    return MaterialApp(home: HomePage(), debugShowCheckedModeBanner: false);
   }
 }
 
@@ -32,12 +33,8 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-
   int _currentIndex = 0;
-  final List<Widget> _children = [
-    ContactWidget(),
-    PlaceholderWidget(Colors.deepOrange)
-  ];
+  final List<Widget> _children = [ContactWidget(), SocialWidget()];
 
   @override
   void initState() {
@@ -53,8 +50,10 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: new AppBar(
-        title: new Text("Evan JUGE",
-          style: TextStyle(fontWeight: FontWeight.bold),),
+        title: new Text(
+          "Evan JUGE",
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
         elevation: 10,
         actions: <Widget>[
@@ -65,7 +64,7 @@ class _HomePageState extends State<HomePage> {
       body: _children[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: _currentIndex,
-        onTap:(newIndex) => setState(() => _currentIndex = newIndex),
+        onTap: (newIndex) => setState(() => _currentIndex = newIndex),
         items: [
           BottomNavigationBarItem(
             icon: new Icon(Icons.contacts),
@@ -105,8 +104,7 @@ class SaveButton extends StatelessWidget {
           // Find the Scaffold in the widget tree and use
           // it to show a SnackBar.
           Scaffold.of(context).showSnackBar(snackBar);
-        }
-    );
+        });
   }
 }
 
@@ -122,14 +120,8 @@ class ContactWidget extends StatelessWidget {
                 Container(
                   child: new Image.asset(
                     'images/moi.png',
-                    height: MediaQuery
-                        .of(context)
-                        .size
-                        .height / 3,
-                    width: MediaQuery
-                        .of(context)
-                        .size
-                        .width,
+                    height: MediaQuery.of(context).size.height / 3,
+                    width: MediaQuery.of(context).size.width,
                     fit: BoxFit.cover,
                   ),
                 ),
@@ -143,8 +135,7 @@ class ContactWidget extends StatelessWidget {
                     ),
                     onTap: () {
                       _urlLauncher.call(tel);
-                    }
-                ),
+                    }),
                 Divider(),
                 ListTile(
                     title: Text(email),
@@ -154,8 +145,7 @@ class ContactWidget extends StatelessWidget {
                     ),
                     onTap: () {
                       _urlLauncher.sendEmail(email);
-                    }
-                ),
+                    }),
                 Divider(),
                 ListTile(
                     title: Text(url),
@@ -165,25 +155,65 @@ class ContactWidget extends StatelessWidget {
                     ),
                     onTap: () {
                       _urlLauncher.openUrl(url);
-                    }
-                ),
+                    }),
               ],
             ),
           ),
-        )
-    );
+        ));
   }
 }
 
-class PlaceholderWidget extends StatelessWidget {
-  final Color color;
-
-  PlaceholderWidget(this.color);
-
+class SocialWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: color,
-    );
+    return new Container(
+        color: Colors.white,
+        child: new Center(
+          child: Card(
+            child: Column(
+              children: [
+                ListTile(
+                    title: Text(url_linkedin),
+                    leading: Icon(
+                      MyCustomIcons.linkedin,
+                      color: Colors.blue[500],
+                    ),
+                    onTap: () {
+                      _urlLauncher.openUrl(url_linkedin);
+                    }),
+                Divider(),
+                ListTile(
+                    title: Text(url_github),
+                    leading: Icon(
+                      MyCustomIcons.github,
+                      color: Colors.blue[500],
+                    ),
+                    onTap: () {
+                      _urlLauncher.openUrl(url_github);
+                    }),
+                Divider(),
+                ListTile(
+                    title: Text(url_dribbble),
+                    leading: Icon(
+                      MyCustomIcons.dribbble,
+                      color: Colors.blue[500],
+                    ),
+                    onTap: () {
+                      _urlLauncher.openUrl(url_dribbble);
+                    }),
+                Divider(),
+                ListTile(
+                    title: Text(url_twitter),
+                    leading: Icon(
+                      MyCustomIcons.twitter,
+                      color: Colors.blue[500],
+                    ),
+                    onTap: () {
+                      _urlLauncher.openUrl(url_twitter);
+                    }),
+              ],
+            ),
+          ),
+        ));
   }
 }
