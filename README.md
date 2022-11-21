@@ -1,6 +1,4 @@
-# evan_juge
-
-Carte de visite de Evan JUGE
+# Business Card
 
 ## Screenshot
 ![2021-03-03 16_28_46-Android Emulator - Pixel_2_API_30_5554](https://user-images.githubusercontent.com/32338891/109829269-a7808880-7c3d-11eb-8bc8-64e3694bb3f4.png)
